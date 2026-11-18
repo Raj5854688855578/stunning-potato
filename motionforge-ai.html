@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MotionForge AI — Video Studio</title>
+<meta name="description" content="Create polished videos from your ideas with MotionForge AI Studio.">
+<style>
+:root{--bg:#090b12;--panel:#111522;--panel2:#171c2c;--line:#282f43;--muted:#9ba5bb;--white:#f5f7ff;--purple:#9a7bff;--cyan:#58e1d2;--pink:#ff77b7}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--white);font:14px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial}
+button,input,textarea,select{font:inherit}button{cursor:pointer}
+.top{height:68px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 26px;background:#0c0f18;position:sticky;top:0;z-index:5}
+.brand{display:flex;align-items:center;gap:11px;font-size:17px;font-weight:850;letter-spacing:-.5px}.mark{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--purple),var(--cyan));display:grid;place-items:center;color:#090b12;font-size:19px}
+.brand small{display:block;font-size:10px;letter-spacing:1.7px;color:var(--muted);font-weight:650;margin-top:-3px}
+.topright{display:flex;align-items:center;gap:12px}.free{border:1px solid #31564f;color:var(--cyan);padding:6px 10px;border-radius:30px;font-size:11px;font-weight:750}
+.layout{max-width:1440px;margin:auto;padding:25px;display:grid;grid-template-columns:minmax(310px,430px) minmax(0,1fr);gap:20px}
+.heading{grid-column:1/-1;margin-bottom:0}.heading h1{font-size:clamp(25px,4vw,36px);letter-spacing:-1.2px;margin:0 0 4px}.heading p{color:var(--muted);margin:0}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:19px;min-width:0}.panel h2{font-size:14px;margin:0 0 14px;display:flex;align-items:center;gap:8px}.num{color:var(--purple);font-size:11px;font-weight:800}
+label{display:block;color:#dce2f1;font-weight:650;font-size:12px;margin:13px 0 7px}
+textarea,select,input{width:100%;background:#0b0f1b;border:1px solid #30394f;border-radius:9px;color:var(--white);padding:11px 12px;outline:none}
+textarea{min-height:135px;resize:vertical}textarea:focus,select:focus,input:focus{border-color:var(--purple)}
+textarea::placeholder,input::placeholder{color:#66718a}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.chips{display:flex;flex-wrap:wrap;gap:7px}.chip{background:#0d1220;border:1px solid #30394f;color:#cbd3e5;padding:7px 10px;border-radius:8px;font-size:11px}.chip.active{border-color:var(--purple);background:#211a3a;color:#e9e2ff}
+.primary{background:linear-gradient(100deg,#8b6cff,#6d8cff);border:0;color:white;border-radius:10px;padding:12px 16px;font-weight:800}.secondary{background:#20283b;border:1px solid #36415b;color:#e7ecfa;border-radius:10px;padding:11px 14px;font-weight:700}.primary:disabled{opacity:.5;cursor:wait}
+.actions{display:flex;gap:9px;margin-top:17px}.actions button{flex:1}
+.previewpanel{display:flex;flex-direction:column;gap:14px}.previewtop{display:flex;justify-content:space-between;align-items:center;gap:10px}.previewtop h2{margin:0}.canvaswrap{background:#05070d;border:1px solid #2c344a;border-radius:13px;overflow:hidden;aspect-ratio:16/9;display:grid;place-items:center;position:relative}
+canvas{width:100%;height:100%;display:block}.empty{position:absolute;text-align:center;color:#9ba5bb;padding:20px;pointer-events:none}.empty strong{display:block;color:#e8ebf5;font-size:16px;margin:8px}
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.toolbar small{color:var(--muted)}
+.progress{height:5px;background:#252c3d;border-radius:10px;overflow:hidden}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--purple),var(--cyan));transition:width .2s}
+.status{color:var(--cyan);font-size:12px;min-height:18px}.scenes{display:grid;grid-template-columns:repeat(auto-fill,minmax(125px,1fr));gap:9px}.scene{border:1px solid var(--line);border-radius:9px;background:#0c111e;padding:10px;color:#cbd3e5;font-size:11px;min-height:64px}.scene b{display:block;color:var(--purple);font-size:10px;margin-bottom:5px}
+.notice{font-size:11px;color:var(--muted);background:#0d1321;border:1px solid var(--line);padding:11px;border-radius:9px}
+footer{max-width:1440px;padding:0 25px 28px;margin:auto;color:#737f98;font-size:11px}
+@media(max-width:900px){.layout{grid-template-columns:1fr;padding:16px}.heading{grid-column:auto}.top{padding:0 16px}.panel{padding:15px}}
+</style>
+</head>
+<body>
+<header class="top">
+ <div class="brand"><div class="mark">▶</div><div>MotionForge AI<small>VIDEO CREATION STUDIO</small></div></div>
+ <div class="topright"><span class="free">FREE STARTER</span></div>
+</header>
+<main class="layout">
+ <section class="heading"><h1>Bring your ideas to life.</h1><p>Turn a script into a motion video. Write your idea, customize the look, and export your creation.</p></section>
+ <section class="panel">
+  <h2><span class="num">01</span> Script & prompt</h2>
+  <label for="prompt">What video do you want to create?</label>
+  <textarea id="prompt" maxlength="1800" placeholder="Describe your video or paste your script...">A young explorer walks through a futuristic city at night. Neon lights glow across the streets. The camera moves closer as the city comes alive. A new future begins.</textarea>
+  <div class="grid2">
+   <div><label for="mode">Creation mode</label><select id="mode"><option value="story">Story scenes</option><option value="quote">Motivational text</option><option value="promo">Product promo</option></select></div>
+   <div><label for="duration">Scene duration</label><select id="duration"><option value="3">3 seconds</option><option value="4" selected>4 seconds</option><option value="5">5 seconds</option><option value="6">6 seconds</option></select></div>
+  </div>
+  <label>Visual style</label>
+  <div class="chips" id="styles">
+   <button class="chip active" data-style="cinematic">Cinematic</button><button class="chip" data-style="neon">Neon</button><button class="chip" data-style="minimal">Minimal</button><button class="chip" data-style="sunset">Sunset</button>
+  </div>
+  <div class="grid2">
+   <div><label for="ratio">Aspect ratio</label><select id="ratio"><option value="16:9">16:9 YouTube</option><option value="9:16">9:16 Shorts / Reels</option><option value="1:1">1:1 Square</option></select></div>
+   <div><label for="size">Resolution</label><select id="size"><option value="720">720p HD</option><option value="1080">1080p Full HD (browser load higher)</option></select></div>
+  </div>
+  <label for="voice">Narration (browser voice)</label><select id="voice"><option value="off">No narration</option><option value="on">Read script aloud</option></select>
+  <div class="actions"><button class="primary" id="make">✦ Create video</button><button class="secondary" id="stop">Stop</button></div>
+  <p class="status" id="status" aria-live="polite">Ready to create.</p>
+  <div class="progress"><span id="bar"></span></div>
+  <p class="notice">Free mode creates animated text/storyboard videos locally in your browser. Realistic AI-generated footage requires connecting a video AI provider and a secure backend; never put private API keys in this page.</p>
+ </section>
+ <section class="panel previewpanel">
+  <div class="previewtop"><h2><span class="num">02</span> Video preview</h2><button class="secondary" id="download" disabled>↓ Export video</button></div>
+  <div class="canvaswrap"><canvas id="screen" width="1280" height="720"></canvas><div class="empty" id="empty"><div style="font-size:28px">✦</div><strong>Your preview appears here</strong>Write a prompt and click Create video</div></div>
+  <div class="toolbar"><small id="sceneinfo">No scenes generated</small><small id="formatinfo">16:9 • HD</small></div>
+  <div class="scenes" id="scenes"><div class="scene">Your storyboard scenes will appear here.</div></div>
+ </section>
+</main>
+<footer>MotionForge AI Starter · Browser-based video rendering · Export format and resolution depend on your device and browser. AI footage generation is not included in this offline starter.</footer>
+<script>
+const $=id=>document.getElementById(id),canvas=$('screen'),ctx=canvas.getContext('2d');
+let chosen='cinematic',story=[],sceneMs=4000,raf=0,started=0,rendering=false,recorder=null,stream=null,lastElapsed=0;
+const themes={
+ cinematic:['#080c1a','#273c67','#9a7bff'],neon:['#09051c','#40126b','#35f2d0'],
+ minimal:['#090b10','#292d38','#f4f4f4'],sunset:['#35152e','#bd4c54','#ffbe77']
+};
+document.querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');chosen=b.dataset.style}));
+function splitScenes(text){
+ let lines=text.split(/[\n.!?]+/).map(x=>x.trim()).filter(Boolean);
+ if(lines.length<=1){let words=text.trim().split(/\s+/),out=[],chunk=[];for(const w of words){chunk.push(w);if(chunk.length>=10){out.push(chunk.join(' '));chunk=[]}}if(chunk.length)out.push(chunk.join(' '));lines=out}
+ return lines.slice(0,12);
+}
+function setCanvasRatio(){
+ const ratio=$('ratio').value;let [w,h]=ratio.split(':').map(Number),base=Number($('size').value);
+ if(w>=h){canvas.width=base===1080?1920:1280;canvas.height=Math.round(canvas.width*h/w)}
+ else{canvas.height=base===1080?1920:1280;canvas.width=Math.round(canvas.height*w/h)}
+ $('formatinfo').textContent=ratio+' • '+$('size').selectedOptions[0].text;
+}
+function wrapText(text,maxWidth,font){ctx.font=font;let words=text.split(/\s+/),lines=[],line='';for(let word of words){let test=line?line+' '+word:word;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=word}else line=test}if(line)lines.push(line);return lines}
+function drawFrame(ms,index){
+ let W=canvas.width,H=canvas.height,[c1,c2,accent]=themes[chosen],grad=ctx.createLinearGradient(0,0,W,H);grad.addColorStop(0,c1);grad.addColorStop(1,c2);ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+ let scale=W/1280,phase=ms/1000;
+ for(let i=0;i<34;i++){let x=((i*193+phase*(12+i%4)*scale)%(W+100))-50,y=(i*89)%H,r=(8+i%6*5)*scale;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fillStyle=accent+'20';ctx.fill()}
+ ctx.fillStyle=accent;ctx.globalAlpha=.8;ctx.fillRect(W*.09,H*.19,5*scale,H*.62);ctx.globalAlpha=1;
+ const title=story[index]||'Your story starts here',fontSize=Math.min(W*.065,H*.11);
+ let lines=wrapText(title,W*.73,`750 ${fontSize}px system-ui`),lineHeight=fontSize*1.32,y=H/2-(lines.length-1)*lineHeight/2;
+ const fade=Math.min(1,(ms%sceneMs)/600);ctx.globalAlpha=fade;ctx.textAlign='center';ctx.textBaseline='middle';ctx.font=`750 ${fontSize}px system-ui`;ctx.shadowColor=accent;ctx.shadowBlur=22*scale;ctx.fillStyle='#fff';
+ lines.forEach((line,i)=>ctx.fillText(line,W*.54,y+i*lineHeight));ctx.shadowBlur=0;ctx.globalAlpha=1;
+ ctx.fillStyle='#ffffff9a';ctx.font=`600 ${Math.max(13,W*.015)}px system-ui`;ctx.textAlign='left';ctx.fillText('MOTIONFORGE  /  AI STUDIO',W*.1,H*.89);
+ ctx.textAlign='right';ctx.fillText(`${String(index+1).padStart(2,'0')}  /  ${story.length}`,W*.9,H*.89);
+}
+function animate(){if(!rendering)return;let elapsed=performance.now()-started;lastElapsed=elapsed;let idx=Math.min(story.length-1,Math.floor(elapsed/sceneMs));drawFrame(elapsed,idx);$('bar').style.width=Math.min(100,elapsed/(story.length*sceneMs)*100)+'%';$('sceneinfo').textContent=`Scene ${idx+1} of ${story.length}`;if(elapsed<story.length*sceneMs)raf=requestAnimationFrame(animate);else finishRender()}
+function showStoryboard(){ $('scenes').innerHTML='';story.forEach((s,i)=>{let d=document.createElement('div');d.className='scene';let b=document.createElement('b');b.textContent='SCENE '+String(i+1).padStart(2,'0');d.append(b,document.createTextNode(s));$('scenes').append(d)})}
+function stopSpeech(){if('speechSynthesis'in window)speechSynthesis.cancel()}
+function finishRender(){if(!rendering)return;rendering=false;cancelAnimationFrame(raf);$('make').disabled=false;$('status').textContent='Video preview completed. Export your video when ready.';$('bar').style.width='100%';$('download').disabled=false;stopSpeech()}
+$('make').onclick=()=>{
+ story=splitScenes($('prompt').value.trim());if(!story.length){$('status').textContent='Please write a prompt or script first.';return}
+ setCanvasRatio();sceneMs=Number($('duration').value)*1000;showStoryboard();$('empty').style.display='none';$('download').disabled=true;
+ rendering=true;started=performance.now();$('make').disabled=true;$('status').textContent='Creating animated scenes…';$('bar').style.width='0%';animate();
+ if($('voice').value==='on'&&'speechSynthesis'in window){let u=new SpeechSynthesisUtterance(story.join('. '));u.rate=.95;speechSynthesis.speak(u)}
+};
+$('stop').onclick=()=>{rendering=false;cancelAnimationFrame(raf);stopSpeech();if(recorder&&recorder.state!=='inactive')recorder.stop();$('make').disabled=false;$('status').textContent='Stopped.'};
+function waitForRender(){return new Promise(resolve=>{let check=()=>{if(!rendering)resolve();else setTimeout(check,150)};check()})}
+$('download').onclick=async()=>{
+ if(!story.length){$('status').textContent='Create a video first.';return}
+ if(!canvas.captureStream||!window.MediaRecorder){$('status').textContent='Video export is not supported in this browser. Try updated Chrome.';return}
+ if(rendering){$('status').textContent='Wait for preview to finish before exporting.';return}
+ let mime=['video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'].find(t=>MediaRecorder.isTypeSupported(t))||'';
+ try{
+  stream=canvas.captureStream(30);recorder=new MediaRecorder(stream,mime?{mimeType:mime}:undefined);let chunks=[];
+  recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};
+  recorder.onstop=()=>{let blob=new Blob(chunks,{type:recorder.mimeType||'video/webm'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='motionforge-video.webm';a.click();setTimeout(()=>URL.revokeObjectURL(url),15000);stream.getTracks().forEach(t=>t.stop());$('status').textContent='Export complete. Your video has been downloaded.'};
+  recorder.start();$('status').textContent='Recording your video… keep this tab open.';started=performance.now();rendering=true;animate();
+ }catch(e){$('status').textContent='Could not export on this device. Try a newer Chrome browser.'}
+};
+$('ratio').onchange=setCanvasRatio;$('size').onchange=setCanvasRatio;setCanvasRatio();drawFrame(0,0);
+</script>
+</body></html>
